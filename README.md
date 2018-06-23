@@ -1,5 +1,7 @@
 ## 概要
 
+[![CircleCI](https://circleci.com/gh/inouet/ken-all.svg?style=svg)](https://circleci.com/gh/inouet/ken-all)
+
 日本郵便の提供する郵便番号データ(通称KEN_ALL.CSV)をパースし、使いやすい形に変換します。
 主に以下のような処理を行います。
 

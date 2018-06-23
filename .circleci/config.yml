@@ -1,0 +1,46 @@
+version: 2
+jobs:
+  build:
+    environment:
+      - GOPATH: /home/circleci/go
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /home/circleci/go/src/github.com/inouet/ken-all
+    steps:
+      - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
+      - checkout
+      - run: go get -v -t -d ./...
+      - run: go get github.com/golang/lint/golint
+      - run: golint ./...
+      - run: go vet ./...
+      - run: go test -v -race ./...
+  deploy:
+    environment:
+      - GOPATH: /home/circleci/go
+    docker:
+     - image: circleci/golang:1.9
+    steps:
+      - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
+      - checkout
+      - run: go get -v -t -d ./...
+      - run: go get github.com/mitchellh/gox
+      - run: go get github.com/tcnksm/ghr
+      - run: gox -output "${GOPATH}/pkg/{{.Dir}}_{{.OS}}_{{.Arch}}"  ./ ./...
+      - run: ghr -u $CIRCLE_PROJECT_USERNAME $CIRCLE_TAG $GOPATH/pkg/
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /.*/
+#  deploy:
+#    jobs:
+#      - deploy:
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /v[0-9]+(\.[0-9]+)*/
