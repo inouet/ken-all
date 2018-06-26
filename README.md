@@ -1,6 +1,11 @@
 ## 概要
 
-[![CircleCI](https://circleci.com/gh/inouet/ken-all.svg?style=svg)](https://circleci.com/gh/inouet/ken-all)
+[![][circleci-svg]][circleci] [![][goreportcard-svg]][goreportcard]
+
+[circleci]: https://circleci.com/gh/inouet/ken-all/tree/master
+[circleci-svg]: https://circleci.com/gh/inouet/ken-all.svg?style=svg
+[goreportcard]: https://goreportcard.com/report/github.com/inouet/ken-all
+[goreportcard-svg]: https://goreportcard.com/badge/github.com/inouet/ken-all
 
 日本郵便の提供する郵便番号データ(通称KEN_ALL.CSV)をパースし、使いやすい形に変換します。
 主に以下のような処理を行います。
@@ -11,6 +16,14 @@
 - 全角数字、記号を半角に変換します
 - データとして使いにくいレコードを加工します(加工処理詳細参照)
 - CSV形式をJSON形式、TSV形式に変換できます
+
+## インストール
+
+```
+$ go get github.com/inouet/ken-all
+```
+
+もしくは、[Releases](https://github.com/inouet/ken-all/releases) からダウンロード
 
 ## コマンドの使い方
 
@@ -29,6 +42,7 @@ $ ken-all convert -i address -o json -f /tmp/KEN_ALL.CSV
 $ ken-all convert -i office  -o json -f /tmp/JIGYOSYO.CSV
 
 {"jis_code":"01101","kana":"(カブ) ニホンケイザイシンブンシヤ サツポロシシヤ","name":"株式会社 日本経済新聞社 札幌支社","pref":"北海道","city":"札幌市中央区","town":"北一条西","address":"6丁目1-2アーバンネット札幌ビル2F","zip7":"0608621","zip5":"060  ","post_office":"札幌中央","type":"0","is_multi":"0","update_status":"0","pref_code":"01"}
+  :
 ```
 
 詳しくは helpを参照ください
@@ -58,7 +72,7 @@ Flags:
 **例**
 
 - 以下に掲載がない場合
-- ○○一円
+- ○○一円 (一円を除く）
 - ○○の次に番地がくる場合
 
 **加工前**
@@ -67,6 +81,7 @@ Flags:
 |----------|------------|---------------|--------------------------|
 | 0600000  | 北海道     | 札幌市中央区  | 以下に掲載がない場合     |
 | 1000301  | 東京都     | 利島村        | 利島村一円               |
+| 5220317  | 滋賀県     | 犬上郡多賀町  | 一円                     |
 | 3060433  | 茨城県     | 猿島郡境町    | 境町の次に番地がくる場合 |
 
 **加工後**
@@ -75,6 +90,7 @@ Flags:
 |----------|------------|---------------|--------------------------|
 | 0600000  | 北海道     | 札幌市中央区  |                          |
 | 1000301  | 東京都     | 利島村        |                          |
+| 5220317  | 滋賀県     | 犬上郡多賀町  | 一円                     |
 | 3060433  | 茨城県     | 猿島郡境町    |                          |
 
 
@@ -124,5 +140,6 @@ Flags:
 
 ## 参考
 
+* [郵便番号データダウンロード](http://www.post.japanpost.jp/zipcode/download.html)
 * [郵便番号データの説明](http://www.post.japanpost.jp/zipcode/dl/readme.html)
 
