@@ -22,8 +22,8 @@ func (reader *Reader) Read() (record []string, err error) {
 	if err != nil {
 		return record, err
 	}
-	for _, i := range []int{1, 2, 4, 5, 6} {
-		record[i] = util.NormalizeString(record[i])
+	for _, v := range []int{1, 2, 4, 5, 6} {
+		record[v] = util.NormalizeString(record[v])
 	}
 	return record, err
 }
