@@ -27,19 +27,19 @@ $ go get github.com/inouet/ken-all
 
 ## コマンドの使い方
 
-住所データをjson形式に変換
+住所データをJSON形式に変換
 
 ```
-$ ken-all convert -i address -o json -f /tmp/KEN_ALL.CSV
+$ ken-all address /tmp/KEN_ALL.CSV -t json
 
 {"region_id":"01101","zip":"0600000","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"","pref":"北海道","city":"札幌市中央区","town":"","update_status":"0","update_reason":"0","pref_code":"01"}
  :
 ```
 
-事業所データをjson形式に変換
+事業所データをJSON形式に変換
 
 ```
-$ ken-all convert -i office  -o json -f /tmp/JIGYOSYO.CSV
+$ ken-all office /tmp/JIGYOSYO.CSV -t json
 
 {"jis_code":"01101","kana":"(カブ) ニホンケイザイシンブンシヤ サツポロシシヤ","name":"株式会社 日本経済新聞社 札幌支社","pref":"北海道","city":"札幌市中央区","town":"北一条西","address":"6丁目1-2アーバンネット札幌ビル2F","zip7":"0608621","zip5":"060  ","post_office":"札幌中央","type":"0","is_multi":"0","update_status":"0","pref_code":"01"}
   :

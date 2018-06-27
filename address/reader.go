@@ -24,8 +24,6 @@ func (reader *Reader) Read() (record []string, err error) {
 
 	inBrackets := false
 
-	list := []int{3, 4, 5, 8}
-
 	idxTownKana := 5
 	idxTownName := 8
 
@@ -39,9 +37,12 @@ func (reader *Reader) Read() (record []string, err error) {
 			break
 		}
 
-		for _, v := range list {
+		for _, v := range []int{3, 4, 5, 8} {
 			record[v] = util.NormalizeString(record[v])
 		}
+
+		// zip5のスペース除去
+		record[1] = strings.Trim(record[1], " ")
 
 		if strings.Contains(record[idxTownName], "(") {
 			inBrackets = true

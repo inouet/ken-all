@@ -35,7 +35,7 @@ func TestBuild(t *testing.T) {
 		inputFile := filepath.Join(testDataDir, c.input)
 		outputFile := filepath.Join(testDataDir, c.output)
 
-		execConvertAddressCmd(buffer, inputFile, c.outputType)
+		execAddressCmd(buffer, inputFile, c.outputType)
 
 		b, err := ioutil.ReadFile(outputFile)
 		if err != nil {
