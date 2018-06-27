@@ -48,17 +48,17 @@ $ ken-all office /tmp/JIGYOSYO.CSV -t json
 詳しくは helpを参照ください
 
 ```
-ken-all convert -h
-Convert csv file into other format.
-
 Usage:
-  ken-all convert [flags]
+  ken-all [flags]
+  ken-all [command]
+
+Available Commands:
+  address     Convert KEN_ALL.CSV into other format.
+  help        Help about any command
+  office      Convert JIGYOSYO.CSV into other format.
 
 Flags:
-  -f, --file string            input file
-  -h, --help                   help for convert
-  -i, --input_type string      input type (default "address")
-  -o, --output_format string   output format (default "csv")
+  -h, --help   help for ken-all
 ```
 
 
