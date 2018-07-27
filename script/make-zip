@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# 郵便番号データ生成スクリプト
+#
+
+set -eux
+
+WORK_DIR=/tmp/ken-all-work
+
+main() {
+
+    echo "[INFO] Working directory = $WORK_DIR"
+    rm   -rf $WORK_DIR
+    mkdir -p $WORK_DIR
+
+    #
+    # 取得
+    #
+
+    # 郵便番号データ
+    echo "[INFO] Download ken_all.zip"
+    wget --quiet https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip -P $WORK_DIR/
+    unzip -p $WORK_DIR/ken_all.zip  > $WORK_DIR/KEN_ALL.CSV
+    rm -f $WORK_DIR/ken_all.zip
+
+    # 事業所データ
+    echo "[INFO] Download jigyosyo.zip"
+    wget --quiet https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip -P $WORK_DIR/
+    unzip -p $WORK_DIR/jigyosyo.zip  > $WORK_DIR/JIGYOSYO.CSV
+
+    #
+    # TSV生成
+    #
+
+    # 1: 郵便番号
+    # 2: 区分(1: 住所 2: 事業所)
+    # 3: 都道府県
+    # 4: 市区町村名
+    # 5: 町域名
+    # 6: 小字名、丁目、番地等
+    # 7: 大口事業所名
+    # 8: 修正コード
+
+    # 郵便番号データ
+    echo "[INFO] Create zip data from KEN_ALL.CSV"
+    ken-all address $WORK_DIR/KEN_ALL.CSV -t tsv \
+        | awk  -F "\t" 'BEGIN { OFS = "\t" }{ print $3, "1", $7, $8, $9, "", "", 1$14 }' \
+        > $WORK_DIR/zip.txt
+
+    # 事業所データ
+    echo "[INFO] Create zip data from JIGYOSYO.CSV"
+    ken-all office $WORK_DIR/JIGYOSYO.CSV -t tsv \
+        | awk  -F "\t" 'BEGIN { OFS = "\t" }{ print $8, "2", $4, $5, $6, $7, $3, 2$13 }' \
+        >> $WORK_DIR/zip.txt
+
+    echo "[INFO] Done file = $WORK_DIR/zip.txt"
+
+}
+
+main
+
