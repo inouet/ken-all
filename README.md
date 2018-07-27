@@ -3,7 +3,7 @@
 [![][circleci-svg]][circleci] [![][goreportcard-svg]][goreportcard]
 
 [circleci]: https://circleci.com/gh/inouet/ken-all/tree/master
-[circleci-svg]: https://circleci.com/gh/inouet/ken-all.svg?style=svg
+[circleci-svg]: https://circleci.com/gh/inouet/ken-all.svg?style=shield
 [goreportcard]: https://goreportcard.com/report/github.com/inouet/ken-all
 [goreportcard-svg]: https://goreportcard.com/badge/github.com/inouet/ken-all
 

@@ -80,6 +80,8 @@ func (row *Row) setPrefCode() {
 }
 
 func (row *Row) fixTown() {
+	row.patch()
+
 	// 以下に掲載がない場合
 	if row.Town == "以下に掲載がない場合" {
 		row.Town = ""
@@ -102,6 +104,17 @@ func (row *Row) fixTown() {
 	// trim
 	row.Town = strings.Trim(row.Town, " ")
 	row.TownKana = strings.Trim(row.TownKana, " ")
+}
+
+// 元データの不具合を補正する
+func (row *Row) patch() {
+	// 6511102  」の後に、が足りないので修正する
+	if row.Zip7 == "6511102" &&
+		row.Town == "山田町下谷上(大上谷、修法ケ原、中一里山「9番地の4、12番地を除く」長尾山、再度公園)" {
+		row.Town = "山田町下谷上(大上谷、修法ケ原、中一里山「9番地の4、12番地を除く」、長尾山、再度公園)"
+		row.TownKana = "ヤマダチョウシモタニガミ(オオカミダニ、シュウホウガハラ、" +
+			"ナカイチリヤマ<9バンチノ4、12バンチヲノゾク>、ナガオヤマ、フタタビコウエン)"
+	}
 }
 
 // 岩手県の第n地割　もしくは、 n地割 以降は削除する
