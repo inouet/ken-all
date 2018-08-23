@@ -3,15 +3,26 @@
 # 郵便番号データ生成スクリプト
 #
 
-set -eux
+set -e
 
-WORK_DIR=/tmp/ken-all-work
+usage_exit() {
+    echo "Usage: $0 -o file" 1>&2
+    exit 1
+}
 
 main() {
 
+    if [ -z "$OUTPUT_FILE" ]; then
+        usage_exit
+    fi
+    if [ -z "$TEMP" ]; then
+        TEMP="/tmp"
+    fi
+
+    :> $OUTPUT_FILE
+
+    WORK_DIR=$(mktemp -d $TEMP/tmp.XXXXXX)
     echo "[INFO] Working directory = $WORK_DIR"
-    rm   -rf $WORK_DIR
-    mkdir -p $WORK_DIR
 
     #
     # 取得
@@ -45,17 +56,30 @@ main() {
     echo "[INFO] Create zip data from KEN_ALL.CSV"
     ken-all address $WORK_DIR/KEN_ALL.CSV -t tsv \
         | awk  -F "\t" 'BEGIN { OFS = "\t" }{ print $3, "1", $7, $8, $9, "", "", 1$14 }' \
-        > $WORK_DIR/zip.txt
+        > $OUTPUT_FILE
 
     # 事業所データ
     echo "[INFO] Create zip data from JIGYOSYO.CSV"
     ken-all office $WORK_DIR/JIGYOSYO.CSV -t tsv \
         | awk  -F "\t" 'BEGIN { OFS = "\t" }{ print $8, "2", $4, $5, $6, $7, $3, 2$13 }' \
-        >> $WORK_DIR/zip.txt
+        >> $OUTPUT_FILE
 
-    echo "[INFO] Done file = $WORK_DIR/zip.txt"
+    rm -rf $WORK_DIR
+    echo "[INFO] Done file = ${OUTPUT_FILE}"
 
 }
 
-main
 
+while getopts o:h OPT
+do
+    case $OPT in
+        o)  OUTPUT_FILE=$OPTARG
+            ;;
+        h)  usage_exit
+            ;;
+        \?) usage_exit
+            ;;
+    esac
+done
+
+main
