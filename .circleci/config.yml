@@ -3,7 +3,7 @@ jobs:
   build:
     environment:
       - GOPATH: /home/circleci/go
-      - GO111MODULE: "ON"
+      - GO111MODULE: "on"
     docker:
       - image: golang:1.11-stretch
     working_directory: /home/circleci/go/src/github.com/inouet/ken-all
@@ -18,7 +18,7 @@ jobs:
   deploy:
     environment:
       - GOPATH: /home/circleci/go
-      - GO111MODULE: "ON"
+      - GO111MODULE: "on"
     docker:
     docker:
      - image: golang:1.11-stretch
