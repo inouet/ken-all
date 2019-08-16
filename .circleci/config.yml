@@ -5,7 +5,7 @@ jobs:
       - GOPATH: /home/circleci/go
       - GO111MODULE: "on"
     docker:
-      - image: golang:1.11-stretch
+      - image: golang:1.12-stretch
     working_directory: /home/circleci/go/src/github.com/inouet/ken-all
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
@@ -21,7 +21,7 @@ jobs:
       - GO111MODULE: "on"
     docker:
     docker:
-     - image: golang:1.11-stretch
+     - image: golang:1.12-stretch
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
