@@ -3,6 +3,8 @@
 BINARY_NAME=ken-all
 VETPKGS = $(shell go list ./... | grep -v -e vendor)
 
+export GO111MODULE=on
+
 .PHONY: build
 build:
 	gox --osarch "darwin/amd64 linux/amd64 windows/amd64" -output="bin/{{.OS}}_{{.Arch}}/$(BINARY_NAME)"
@@ -23,7 +25,7 @@ lint:
 .PHONY: deps
 deps:
 	go get -d -v .
-	dep ensure -update
+	go mod tidy
 
 .PHONY: vet
 vet:
