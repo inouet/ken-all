@@ -5,13 +5,13 @@ jobs:
       - GOPATH: /home/circleci/go
       - GO111MODULE: "on"
     docker:
-      - image: golang:1.11-stretch
+      - image: golang:1.12-stretch
     working_directory: /home/circleci/go/src/github.com/inouet/ken-all
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
       - run: go get -v -t -d ./...
-      - run: go get github.com/golang/lint/golint
+      - run: go get golang.org/x/lint/golint
       - run: golint ./...
       - run: go vet ./...
       - run: go test -v -race ./...
@@ -20,8 +20,7 @@ jobs:
       - GOPATH: /home/circleci/go
       - GO111MODULE: "on"
     docker:
-    docker:
-     - image: golang:1.11-stretch
+     - image: golang:1.12-stretch
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
