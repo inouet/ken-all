@@ -4,7 +4,7 @@ jobs:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-      - image: circleci/golang:1.13
+      - image: circleci/golang:1.14
     working_directory: /home/circleci/go/src/github.com/inouet/ken-all
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
@@ -18,7 +18,7 @@ jobs:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-     - image: circleci/golang:1.13
+     - image: circleci/golang:1.14
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
