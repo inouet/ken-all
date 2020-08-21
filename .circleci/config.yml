@@ -18,7 +18,7 @@ jobs:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-     - image: circleci/golang:1.14
+     - image: circleci/golang:1.15
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
