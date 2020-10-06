@@ -5,6 +5,9 @@ jobs:
       - GOPATH: /home/circleci/go
     docker:
       - image: circleci/golang:1.15
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
     working_directory: /home/circleci/go/src/github.com/inouet/ken-all
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
@@ -18,7 +21,10 @@ jobs:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-     - image: circleci/golang:1.15
+      - image: circleci/golang:1.15
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
     steps:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
@@ -33,12 +39,16 @@ workflows:
   build:
     jobs:
       - build:
+          context:
+            - docker-hub-creds
           filters:
             branches:
               only: /.*/
   deploy:
     jobs:
       - deploy:
+          context:
+            - docker-hub-creds
           filters:
             branches:
               ignore: /.*/
