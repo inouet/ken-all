@@ -7,7 +7,8 @@
 [goreportcard]: https://goreportcard.com/report/github.com/inouet/ken-all
 [goreportcard-svg]: https://goreportcard.com/badge/github.com/inouet/ken-all
 
-日本郵便の提供する郵便番号データ(通称KEN_ALL.CSV)をパースし、使いやすい形に変換します。
+日本郵便の提供する郵便番号データ(通称KEN_ALL.CSV)をパースし、使いやすい形に変換するコマンドラインツールです。
+
 主に以下のような処理を行います。
 
 - 複数行に分割された行を結合します
@@ -19,27 +20,57 @@
 
 ## インストール
 
+
+### Macユーザーの場合
+
+homebrew を使って下記のようにインストールできます。
+
+```
+$ brew tap inouet/ken-all
+$ brew install ken-all
+```
+
+### go ユーザーの場合
+
 ```
 $ go get github.com/inouet/ken-all
 ```
 
-もしくは、[Releases](https://github.com/inouet/ken-all/releases) からダウンロード
+### バイナリのダウンロード
+
+[Releases](https://github.com/inouet/ken-all/releases) からダウンロード
+
 
 ## コマンドの使い方
+
+
+データを取得して解凍
+
+```
+$ wget --quiet https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip
+
+$ unzip ken_all.zip
+```
+
 
 住所データをJSON形式に変換
 
 ```
-$ ken-all address /tmp/KEN_ALL.CSV -t json
+$ ken-all address KEN_ALL.CSV -t json
 
 {"region_id":"01101","zip":"0600000","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"","pref":"北海道","city":"札幌市中央区","town":"","update_status":"0","update_reason":"0","pref_code":"01"}
+{"region_id":"01101","zip":"0640941","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"アサヒガオカ","pref":"北海道","city":"札幌市中央区","town":"旭ケ丘","update_status":"0","update_reason":"0","pref_code":"01"}
+{"region_id":"01101","zip":"0600041","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"オオドオリヒガシ","pref":"北海道","city":"札幌市中央区","town":"大通東","update_status":"0","update_reason":"0","pref_code":"01"}
+{"region_id":"01101","zip":"0600042","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"オオドオリニシ","pref":"北海道","city":"札幌市中央区","town":"大通西","update_status":"0","update_reason":"0","pref_code":"01"}
+{"region_id":"01101","zip":"0640820","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"オオドオリニシ","pref":"北海道","city":"札幌市中央区","town":"大通西","update_status":"0","update_reason":"0","pref_code":"01"}
+{"region_id":"01101","zip":"0600031","pref_kana":"ホッカイドウ","city_kana":"サッポロシチュウオウク","town_kana":"キタ1ジョウヒガシ","pref":"北海道","city":"札幌市中央区","town":"北一条東","update_status":"0","update_reason":"0","pref_code":"01"}
  :
 ```
 
 事業所データをJSON形式に変換
 
 ```
-$ ken-all office /tmp/JIGYOSYO.CSV -t json
+$ ken-all office JIGYOSYO.CSV -t json
 
 {"jis_code":"01101","kana":"(カブ) ニホンケイザイシンブンシヤ サツポロシシヤ","name":"株式会社 日本経済新聞社 札幌支社","pref":"北海道","city":"札幌市中央区","town":"北一条西","address":"6丁目1-2アーバンネット札幌ビル2F","zip7":"0608621","zip5":"060  ","post_office":"札幌中央","type":"0","is_multi":"0","update_status":"0","pref_code":"01"}
   :
