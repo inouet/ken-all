@@ -15,7 +15,7 @@ func newRootCmd() *cobra.Command {
 		Short: "",
 		Long:  "",
 		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Help()
+			cmd.Help() //nolint:errcheck
 		},
 	}
 

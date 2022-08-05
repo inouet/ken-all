@@ -155,8 +155,5 @@ var regexpIsBuilding = regexp.MustCompile(`\((.+)階(.*)\)`)
 
 // IsBuilding ビルかどうか
 func IsBuilding(s string) bool {
-	if regexpIsBuilding.Match([]byte(s)) {
-		return true
-	}
-	return false
+	return regexpIsBuilding.Match([]byte(s))
 }

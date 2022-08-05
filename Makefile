@@ -20,7 +20,7 @@ test:
 
 .PHONY: lint
 lint:
-	go list ./... | xargs golint -set_exit_status | grep -v 'should have comment or be unexported' | grep -v 'comment on exported function'
+	golangci-lint run ./...
 
 .PHONY: deps
 deps:

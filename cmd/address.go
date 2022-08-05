@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"io"
+	"log"
 	"os"
 
 	"golang.org/x/text/encoding/japanese"
@@ -54,7 +55,12 @@ func execAddressCmd(w io.Writer, inputFile, outputType string) error {
 
 	ioReader, err := os.Open(inputFile)
 
-	defer ioReader.Close()
+	defer func() {
+		err := ioReader.Close()
+		if err != nil {
+			log.Println("can't close ioReader", err)
+		}
+	}()
 
 	if err != nil {
 		return err
@@ -83,7 +89,10 @@ func execAddressCmd(w io.Writer, inputFile, outputType string) error {
 				continue
 			}
 
-			wtr.Write(row)
+			err := wtr.Write(row)
+			if err != nil {
+				return err
+			}
 		}
 	}
 

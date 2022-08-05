@@ -35,7 +35,10 @@ func TestBuild(t *testing.T) {
 		inputFile := filepath.Join(testDataDir, c.input)
 		outputFile := filepath.Join(testDataDir, c.output)
 
-		execAddressCmd(buffer, inputFile, c.outputType)
+		err := execAddressCmd(buffer, inputFile, c.outputType)
+		if err != nil {
+			t.Errorf("execAddressCmd failed %s", err.Error())
+		}
 
 		b, err := ioutil.ReadFile(outputFile)
 		if err != nil {
