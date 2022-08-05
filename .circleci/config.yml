@@ -4,7 +4,7 @@ jobs:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-      - image: circleci/golang:1.16
+      - image: cimg/go:1.18
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
@@ -26,7 +26,7 @@ jobs:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-      - image: circleci/golang:1.16
+      - image: cimg/go:1.18
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
