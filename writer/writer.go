@@ -26,8 +26,6 @@ func NewWriter(writer io.Writer, outputType string) Writer {
 		w = CsvWriter{
 			w: tmp,
 		}
-	} else {
-		// TODO
 	}
 	return w
 }

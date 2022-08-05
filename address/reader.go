@@ -48,7 +48,7 @@ func (reader *Reader) Read() (record []string, err error) {
 			inBrackets = true
 		}
 
-		if inBrackets == true { // カッコ内の場合は結合
+		if inBrackets { // カッコ内の場合は結合
 			townName = townName + record[idxTownName]
 			if townKana != record[idxTownKana] {
 				// 6028064 イッチョウメ のように同じものが続く場合は無視する
@@ -60,7 +60,7 @@ func (reader *Reader) Read() (record []string, err error) {
 			inBrackets = false
 		}
 
-		if inBrackets == false { // カッコ内でない場合
+		if !inBrackets { // カッコ内でない場合
 			if townKana != "" {
 				record[idxTownName] = townName
 				record[idxTownKana] = townKana

@@ -3,11 +3,12 @@ package cmd
 import (
 	"errors"
 	"io"
+	"log"
 	"os"
 
-	"golang.org/x/text/transform"
-	"golang.org/x/text/encoding/japanese"
 	"github.com/spf13/cobra"
+	"golang.org/x/text/encoding/japanese"
+	"golang.org/x/text/transform"
 
 	"github.com/inouet/ken-all/office"
 	"github.com/inouet/ken-all/writer"
@@ -51,7 +52,12 @@ func execOfficeCmd(w io.Writer, inputFile, outputType string) error {
 
 	ioReader, err := os.Open(inputFile)
 
-	defer ioReader.Close()
+	defer func() {
+		err := ioReader.Close()
+		if err != nil {
+			log.Println("can't close ioReader", err)
+		}
+	}()
 
 	if err != nil {
 		return err
