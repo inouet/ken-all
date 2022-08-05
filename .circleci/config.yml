@@ -1,10 +1,10 @@
-version: 2
+version: 2.1
 jobs:
   build:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-      - image: cimg/go:1.18
+      - image: circleci/golang:1.16
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
@@ -13,15 +13,20 @@ jobs:
       - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
       - checkout
       - run: go get -v -t -d ./...
-      - run: go get golang.org/x/lint/golint
-      - run: golint ./...
+      - run:
+          name: Run lint
+          command: |
+            curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.48.0
+            golangci-lint run ./...
       - run: go vet ./...
-      - run: go test -v -race ./...
+      - run:
+          name: Run test
+          command: go test -v -race ./...
   deploy:
     environment:
       - GOPATH: /home/circleci/go
     docker:
-      - image: cimg/go:1.18
+      - image: circleci/golang:1.16
         auth:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
@@ -35,7 +40,6 @@ jobs:
       - run: ghr -u $CIRCLE_PROJECT_USERNAME $CIRCLE_TAG $GOPATH/pkg/ken-all/
 
 workflows:
-  version: 2
   build:
     jobs:
       - build:
