@@ -4,7 +4,7 @@ require (
 	github.com/ktnyt/go-moji v1.0.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spiegel-im-spiegel/gocli v0.10.4
-	golang.org/x/text v0.7.0
+	golang.org/x/text v0.8.0
 )
 
 require (
